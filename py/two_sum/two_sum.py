@@ -1,7 +1,7 @@
 # https://leetcode.com/problems/two-sum/
 
 def two_sum(nums, target):
-    print('-----input:', nums, target)
+    print('nums are', nums, 'target is', target)
     lookup = {}
     result = None
     for i in range(len(nums)):
@@ -10,7 +10,7 @@ def two_sum(nums, target):
             break
         else:
             lookup[target - nums[i]] = i
-    print('result=', result)
+    print('result is', result)
     return result
 
 nums = [2, 7, 11, 15]
