@@ -1,6 +1,4 @@
-from collections import deque
-
-# Given a binary tree, traverse it using breath first traversal
+# Given a binary tree, traverse it using depth first traversal
 
 class Node:
     def __init__(self, value):
@@ -9,18 +7,18 @@ class Node:
         self.right = None
 
 
-def bfs(root):
+def dfs(root):
     if not root:
         return None
     result = []
-    q = deque([root])
-    while q:
-        node = q.popleft()
+    s = [root] # Stack
+    while s:
+        node = s.pop()
         result.append(node.val)
-        if node.left:
-            q.append(node.left)
         if node.right:
-            q.append(node.right)
+            s.append(node.right)
+        if node.left:
+            s.append(node.left)
     return result
 
 
@@ -35,4 +33,4 @@ node5 = Node(5)
 node3.left = node4
 node3.right = node5
 
-print(bfs(root))
+print(dfs(root))
