@@ -17,3 +17,17 @@ s[-1]
 l = [1, 2, 3, 4]
 l[-1]
 
+# Reverse a list in-place
+l.reverse()
+
+# Reverse a list
+l[::-1]
+
+# Sort a list in-place
+l.sort()
+l.sort(reverse=True)
+
+# Sort a list
+sorted(l)
+sorted(l, reverse=True)
+

@@ -5,7 +5,7 @@ def two_sum(nums, target):
     lookup = {}
     result = None
     for i in range(len(nums)):
-        if nums[i] in lookup: # found
+        if nums[i] in lookup:
             result = [lookup[nums[i]], i]
             break
         else:
@@ -24,4 +24,3 @@ assert(two_sum(nums, target) == [1, 2])
 nums = [3, 3]
 target = 6
 assert(two_sum(nums, target) == [0, 1])
-
