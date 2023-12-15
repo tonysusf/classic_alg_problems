@@ -17,3 +17,6 @@ def longest_non_repeat_substring_len(s: str):
 assert(longest_non_repeat_substring_len('abcabcbb') == 3)
 assert(longest_non_repeat_substring_len('bbbbb') == 1)
 assert(longest_non_repeat_substring_len('pwwkew') == 3)
+assert(longest_non_repeat_substring_len('') == 0)
+assert(longest_non_repeat_substring_len('a') == 1)
+assert(longest_non_repeat_substring_len('ab') == 2)
