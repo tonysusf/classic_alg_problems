@@ -53,3 +53,10 @@ d.popleft()
 d.appendleft()
 
 
+##################
+# Lambda
+##################
+
+intervals = [[1, 2], [7, 5], [2, 9], [5, 6]]
+sorted(intervals, key=lambda x: x[0])
+
