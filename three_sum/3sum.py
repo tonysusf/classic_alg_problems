@@ -3,25 +3,20 @@
 
 def three_sum(nums): # runtime O(n^2), space O(n)
     results = []
-    nums.sort() # sort it 1st!
-    print('nums', nums)
-    for idx1 in range(len(nums)):
-        if nums[idx1] > 0: # scan up to zero
+    nums.sort()
+    for i in range(len(nums)):
+        if nums[i] > 0:
             break
-        if idx1 > 0 and nums[idx1 - 1] == nums[idx1]: # skip duplicate
-            continue
-
-        # find the other 2 nums after current index summing to 0
-        lookup = set()
-        for idx2 in range(idx1+1, len(nums)): # scan the right part of idx
-            target = 0 - nums[idx1] - nums[idx2]
-            if target in lookup:
-                results.append([nums[idx1], nums[idx2], target]) # found it
-                while idx2 < len(nums) - 1 and nums[idx2] == nums[idx2 + 1]: # skip duplicate
-                    idx2 += 1
-            else:
-                lookup.add(nums[idx2])
-    print('results', results)
+        if i == 0 or nums[i - 1] != nums[i]: # no dup with last one
+            seen = set()
+            j = i + 1
+            while j < len(nums):
+                if -nums[i] - nums[j] in seen:
+                    results.append([nums[i], nums[j], -nums[i] - nums[j]])
+                    while j + 1 < len(nums) and nums[j] == nums[j + 1]: # no dup with next one
+                        j += 1
+                seen.add(nums[j])
+                j += 1
     return results
 
 
@@ -38,14 +33,18 @@ nums = [-1, 0, 1, 2, -1, -4]
 results = three_sum(nums)
 assert _to_str(results) == _to_str([[-1,-1,2],[-1,0,1]])
 
-
 nums = [0, 1, 1]
 results = three_sum(nums)
 assert _to_str(results) == _to_str([[]])
-
 
 nums = [0, 0, 0]
 results = three_sum(nums)
 assert _to_str(results) == _to_str([[0,0,0]])
 
+nums = [0, 0, 0, 0]
+results = three_sum(nums)
+assert _to_str(results) == _to_str([[0,0,0]])
 
+nums = [0, 0, 0, 0, 0]
+results = three_sum(nums)
+assert _to_str(results) == _to_str([[0,0,0]])
