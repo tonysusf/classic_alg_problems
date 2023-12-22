@@ -1,4 +1,5 @@
-# https://leetcode.com/problems/permutations/description/
+# https://leetcode.com/problems/permutations/
+# given a list of unique integers, get the permutations.
 
 def permutate(nums):
     results = []
@@ -15,10 +16,10 @@ def _permutate(nums, p, results):
         nums[idx], nums[p] = nums[p], nums[idx]
 
 def _to_set(l):
-    return set(['|'.join(str(k)) for k in l])
+    return set(['|'.join(str(sub_l)) for sub_l in l])
 
-nums = [1,2,3]
-expected = [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+nums = [1, 2, 3]
+expected = [[1, 2, 3],[1, 3, 2],[2, 1, 3],[2, 3, 1],[3, 1, 2],[3, 2, 1]]
 results = permutate(nums)
 assert _to_set(results) == _to_set(expected)
 
@@ -29,3 +30,7 @@ results = permutate(nums)
 assert _to_set(results) == _to_set(expected)
 
 
+nums = [0, 1]
+expected = [[0, 1], [1, 0]]
+results = permutate(nums)
+assert _to_set(results) == _to_set(expected)
