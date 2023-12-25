@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/pacific-atlantic-water-flow/
+# given a matrix, pacific left and top, atlantic right and bottom, return list of nodes both ocean water can reach
 
 
 def dfs(row, col, visited, m, last_val=0):
