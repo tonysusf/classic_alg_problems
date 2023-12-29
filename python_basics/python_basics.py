@@ -17,6 +17,13 @@ s[-1]
 l = [1, 2, 3, 4]
 l[-1]
 
+# Initializing array
+l = [0] * 3
+
+# Initializing two-dimensional array
+# Note this will mess up: l = [[0] * 3] * 2
+l = [[0] * 3 for _ in range(2)]
+
 # Reverse a list in-place
 l.reverse()
 

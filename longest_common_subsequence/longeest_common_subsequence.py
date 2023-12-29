@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/longest-common-subsequence/
+# return the length of the longest common subsequence of 2 given strings
 
 
 def longest_common_subsequence(str1, str2):
