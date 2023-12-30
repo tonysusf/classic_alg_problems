@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/house-robber-ii/submissions/
+# https://leetcode.com/problems/house-robber-ii/
 
 def rob_cicrle(nums):
     if not nums:
