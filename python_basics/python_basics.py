@@ -59,6 +59,11 @@ d.pop()
 d.popleft()
 d.appendleft()
 
+# Set
+s = set([1, 1, 4, 2, 2])
+s.add(5)
+print(s)
+
 
 ##################
 # Lambda
