@@ -3,28 +3,28 @@
 from collections import defaultdict
 
 
-def has_cycle_in_dfs(course_idx, adj_edges, visited, is_parent):
-    if is_parent[course_idx]:
+def has_cycle(current, edges, visited, in_path):
+    if in_path[current]:
         return True # cycle found
-    if visited[course_idx]:
+    if visited[current]:
         return False
-    visited[course_idx] = True
-    is_parent[course_idx] = True
-    for neighbor in adj_edges[course_idx]:
-        if has_cycle_in_dfs(neighbor, adj_edges, visited, is_parent):
+    visited[current] = True
+    in_path[current] = True
+    for other_node in edges[current]:
+        if has_cycle(other_node, edges, visited, in_path):
             return True # bubble up
-    is_parent[course_idx] = False
+    in_path[current] = False # reset
     return False
 
 def can_finish_courses(num_of_courses, prerequisites):
-    adj_edges = defaultdict(list) # key as target course, value as dependent courses
-    for pr in prerequisites:
-        adj_edges[pr[1]].append(pr[0])
+    edges = defaultdict(list) # key as target course, value as dependent courses
+    for p in prerequisites:
+        edges[p[1]].append(p[0])
     visited = [False] * num_of_courses
-    is_parent = [False] * num_of_courses
-    for course_idx in range(num_of_courses):
-        if has_cycle_in_dfs(course_idx, adj_edges, visited, is_parent):
-            return False # has cycle then can't schedule
+    in_path = [False] * num_of_courses
+    for current in range(num_of_courses):
+        if has_cycle(current, edges, visited, in_path):
+            return False # can't finish
     return True
 
 num_of_courses = 2
