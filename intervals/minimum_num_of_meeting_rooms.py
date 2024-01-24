@@ -3,16 +3,17 @@
 def min_meeting_rooms(intervals):
     if not intervals:
         return 0
-    start_times = sorted([k[0] for k in intervals])
-    end_times = sorted(k[1] for k in intervals)
+    # must be sorted for each
+    start_times = sorted([x[0] for x in intervals])
+    end_times = sorted(x[1] for x in intervals)
 
-    left = right = room_count = 0
-    while left < len(intervals):
-        if start_times[left] >= end_times[right]:
-            room_count -= 1 # meet ended so release a room
-            right += 1
-        room_count += 1 # use a room
-        left += 1   
+    start_idx = end_idx = room_count = 0
+    while start_idx < len(intervals):
+        if start_times[start_idx] >= end_times[end_idx]:
+            room_count -= 1 # meeting ended so release a room
+            end_idx += 1
+        room_count += 1 # add a new room each time
+        start_idx += 1
     return room_count
 
 
