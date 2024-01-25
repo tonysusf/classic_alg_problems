@@ -1,30 +1,28 @@
 # https://leetcode.com/problems/coin-change/
-# given list of coins, return min num of coins summing up to the amount
+# Given a list of coins, return min num of coins summing up to the amount
 
-def coin_change(coins, amount):
-    dp = [float('inf')] * (amount + 1) # float('inf') is super large
+def minimum_num_of_coins_change(coins, amount):
+    dp = [float('inf')] * (amount + 1) # float('inf') is infinity super large
     dp[0] = 0
 
     for coin in coins:
-        for x in range(coin, amount + 1):
-            dp[x] = min(dp[x], dp[x - coin] + 1)
+        for i in range(coin, amount + 1):
+            dp[i] = min(dp[i], dp[i - coin] + 1)
 
-    if dp[amount] == float('inf'):
-        return -1
-    else:
-        return dp[amount]
+    return dp[-1] if dp[-1] != float('inf') else -1
+
 
 coins = [1,2,5]
 amount = 11
-assert coin_change(coins, amount) == 3
+assert minimum_num_of_coins_change(coins, amount) == 3
 
 
 coins = [2]
 amount = 3
-assert coin_change(coins, amount) == -1
+assert minimum_num_of_coins_change(coins, amount) == -1
 
 
 coins = [2, 3]
 amount = 10
-assert coin_change(coins, amount) == 4
+assert minimum_num_of_coins_change(coins, amount) == 4
 
