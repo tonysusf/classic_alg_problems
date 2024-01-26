@@ -24,6 +24,11 @@ l = [0] * 3
 # Note this will mess up: l = [[0] * 3] * 2
 l = [[0] * 3 for _ in range(2)]
 
+# List comprehension
+l = [-1, -2, 3, 4]
+l1 = [x if x > 0 else 0 for x in l] # convert to 0 if negative
+l2 = [x for x in l if x > 0] # remove if negative
+
 # Reverse a list in-place
 l.reverse()
 
