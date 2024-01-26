@@ -1,16 +1,14 @@
 # https://leetcode.com/problems/longest-substring-without-repeating-characters/
 
 def longest_non_repeat_substring_len(s: str):
-    print('s is', s)
-    l = 0 # left pointer
+    left = 0
     lookup = {} # dict for char to index
     max_len = 0
     for i in range(len(s)):
-        c = s[i]
-        if c in lookup and lookup[c] >= l:
-            l = lookup[c] + 1 # point l to be after the duplicate, +1 so no duplicate
-        lookup[c] = i # save the current char with index
-        max_len = max(max_len, i - l + 1)
+        if s[i] in lookup and lookup[s[i]] >= left:
+            left = lookup[s[i]] + 1 # index of 1st char non-repating
+        lookup[s[i]] = i
+        max_len = max(max_len, i - left + 1)
     return max_len
 
 
