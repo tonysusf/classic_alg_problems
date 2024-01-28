@@ -5,20 +5,22 @@
 
 
 def num_decodings(s):
-    if s[0] == '0': return 0
-    back2 = 1
-    back1 = 1
+    if not s or s[0] == '0': return 0
+    b1 = b2 = 1
     for i in range(1, len(s)):
-        current = 0
-        if s[i] != '0':
-            current += back1
-        two_digit = int(s[i - 1: i + 1])
-        if 10 <= two_digit <= 26:
-            current += back2
-        back1, back2 = current, back1
-    return back1
+        current = b1 if s[i] != '0' else 0
+        if 10 <= int(s[i - 1: i + 1]) <= 26:
+            current += b2
+        b1, b2 = current, b1
+    return b1
+
+assert num_decodings('1') == 1
+
+assert num_decodings('10') == 1
 
 assert num_decodings('12') == 2
+
+assert num_decodings('102') == 1
 
 assert num_decodings('226') == 3
 
@@ -27,3 +29,5 @@ assert num_decodings('09') == 0
 assert num_decodings('206') == 1
 
 assert num_decodings('7906') == 0
+
+assert num_decodings('') == 0
