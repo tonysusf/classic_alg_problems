@@ -18,3 +18,4 @@ assert(longest_non_repeat_substring_len('pwwkew') == 3)
 assert(longest_non_repeat_substring_len('') == 0)
 assert(longest_non_repeat_substring_len('a') == 1)
 assert(longest_non_repeat_substring_len('ab') == 2)
+assert(longest_non_repeat_substring_len('abba') == 2) # check dict index vs left case
