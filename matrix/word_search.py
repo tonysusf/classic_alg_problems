@@ -12,35 +12,26 @@
 def search_word(m, word):
     for row in range(len(m)):
         for col in range(len(m[0])):
-            if dfs(row, col, word, 0, m):
+            if visit(row, col, word, m):
                 return True
     return False
 
-def dfs(row, col, word, idx, m):
-    result = False
-
-    if idx == len(word):
-        return True
+def visit(row, col, word, m, idx=0):
+    if idx == len(word): return True
 
     if row < 0 or row >= len(m) or col < 0 or col >= len(m[0]):
         return False
 
-    if m[row][col] != word[idx]:
-        return False
+    if m[row][col] != word[idx]: return False
 
-    # mark as visited
     m[row][col] = None
-
-    result = dfs(row+1, col, word, idx+1, m)
-    if not result:
-        result = dfs(row-1, col, word, idx+1, m)
-    if not result:
-        result = dfs(row, col+1, word, idx+1, m)
-    if not result:
-        result = dfs(row, col-1, word, idx+1, m)
-
+    if visit(row+1, col, word, m, idx+1): return True
+    if visit(row-1, col, word, m, idx+1): return True
+    if visit(row, col+1, word, m, idx+1): return True
+    if visit(row, col-1, word, m, idx+1): return True
     m[row][col] = word[idx]
-    return result
+    return False
+
 
 matrix = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
 word = "ABCCED"
