@@ -7,22 +7,27 @@
 #   7 8 9      9 6 3
 #
 
+# Algorithm: for a given row, col
+# (1) swap, opposite new col
+# (2) no swap, opposite both
+# (3) swap, opposite new row
+# swap is mirror by diagonal; opposite is mirror horizontally or vertically
+
 def rotate_2d(m):
-    n = len(m[0])
-    for col in range(n // 2 + n % 2): # i
-        for row in range(n // 2): # j
-            # 4 notes: (row to col, col to opposite as row - clockwise)
-            # (1) n-row-1, col
-            # (2) n-col-1, n-row-1
-            # (3) row, n-col-1
-            # (4) col, row
+    n = len(matrix)
+    def opposite(x): # 1 -> 1; 0 -> 2; 2->0
+        return n - x -1
+    for row in range(n//2 + n%2): # 2
+        for col in range(n//2): # 1
+            r1, c1 = col, opposite(row)
+            r2, c2 = opposite(row), opposite(col)
+            r3, c3 = opposite(col), row
 
-            tmp = m[n -row -1][col]
-
-            m[n -row -1][col]       = m[n -col -1][n -row -1]
-            m[n -col -1][n -row -1] = m[row]      [n -col -1]
-            m[row]      [n -col -1] = m[col]      [row]
-            m[col]      [row]       = tmp
+            tmp = matrix[row][col]
+            matrix[row][col] = matrix[r3][c3]
+            matrix[r3][c3] = matrix[r2][c2]
+            matrix[r2][c2] = matrix[r1][c1]
+            matrix[r1][c1] = tmp
 
 matrix = [[1,2,3],[4,5,6],[7,8,9]]
 expected = [[7,4,1],[8,5,2],[9,6,3]]
