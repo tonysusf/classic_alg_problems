@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/reorder-list/
 
-
 class ListNode:
     def __init__(self, val=0):
         self.val = val
@@ -11,7 +10,7 @@ def reorder_list(head):
     if not head:
         return
 
-    # find middle
+    # find middle point
     mid = fast = head
     while fast and fast.next:
         mid = mid.next
