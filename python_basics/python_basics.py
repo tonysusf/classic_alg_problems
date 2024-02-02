@@ -77,3 +77,25 @@ print(s)
 intervals = [[1, 2], [7, 5], [2, 9], [5, 6]]
 sorted(intervals, key=lambda x: x[0])
 
+
+##################
+# Heap
+##################
+import heapq
+
+# Init min heap
+min_heap = []
+
+# Push to heap, size increases
+heapq.heappush(min_heap, 6)
+heapq.heappush(min_heap, 2)
+print(min_heap)
+
+# Push a new one into heap, pop out the smallest one, to keep the heap size
+smallest = heapq.heappushpop(min_heap, 4)
+print(min_heap, smallest)
+
+# Get k-largest from a list
+l = [1, 2, 9, 4, 5]
+k = 2
+heapq.nlargest(k, l)
