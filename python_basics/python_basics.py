@@ -99,3 +99,9 @@ print(min_heap, smallest)
 l = [1, 2, 9, 4, 5]
 k = 2
 heapq.nlargest(k, l)
+
+
+# Random
+import randmon
+random.random()
+random.rnadint(0,100)
