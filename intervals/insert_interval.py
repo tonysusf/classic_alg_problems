@@ -2,14 +2,10 @@
 # Insert a interval into a sorted interval list
 
 def insert_sorted_intervals(intervals, new_interval):
-    # Insert in-place
-    for i in range(len(intervals)):
-        if new_interval[0] < intervals[i][0]:
-            intervals.insert(i, new_interval)
-            new_interval = None
-            break
-    if new_interval:
-        intervals.append(new_interval)
+    i = 0
+    while i < len(intervals) and intervals[i][0] < new_interval[0]:
+        i += 1
+    intervals.insert(i, new_interval)
 
 	# Merge a sorted interval list
     results = []
