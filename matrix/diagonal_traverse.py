@@ -12,17 +12,16 @@ def find_diagonal_order(m):
         tmp_row = row + (-1 if up else 1)
         tmp_col = col + (1 if up else -1)
 
-        if tmp_row < 0 or tmp_row == num_of_rows or tmp_col < 0 or tmp_col == num_of_cols:
+        if not(0 <= tmp_row < num_of_rows) or not(0 <= tmp_col < num_of_cols):
             if up:
-                row += 1 if col==num_of_cols-1 else 0
-                col += 1 if col<num_of_cols-1 else 0
+                tmp_row = row + (1 if col == num_of_cols - 1 else 0)
+                tmp_col = col + (1 if col < num_of_cols - 1 else 0)
             else:
-                col += 1 if row==num_of_rows-1 else 0
-                row += 1 if row<num_of_rows-1 else 0
+                tmp_row = row + (1 if row < num_of_rows - 1 else 0)
+                tmp_col = col + (1 if row == num_of_rows - 1 else 0)
             up = not up
-        else:
-            row = tmp_row
-            col = tmp_col
+
+        row, col = tmp_row, tmp_col
 
     return result
 
