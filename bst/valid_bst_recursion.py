@@ -9,30 +9,19 @@ class Node:
 
 
 class Solution:
-    def __init__(self):
-        self.last_visited_node = None
-
     def is_valid_bst(self, root):
-        return self.dfs(root)
-
-    def dfs(self, node): # in order left < self < right
-        if node is None:
+        last_node = None
+        def dfs(node):
+            nonlocal last_node
+            if node is None: return True
+            if dfs(node.left) == False: return False
+            if last_node and node.val <= last_node.val: return False
+            last_node = node
+            if dfs(node.right) == False: return False
             return True
-        # left
-        if node.left and self.dfs(node.left) == False:
-            return False
 
-        # self
-        if self.last_visited_node and node.val <= self.last_visited_node.val:
-            return False
+        return dfs(root)
 
-        self.last_visited_node = node
-
-        # right
-        if node.right and self.dfs(node.right) == False:
-            return False
-
-        return True
 
 root = Node(2)
 node2 = Node(1)
