@@ -104,4 +104,4 @@ heapq.nlargest(k, l)
 # Random
 import randmon
 random.random()
-random.rnadint(0,100)
+random.randint(0,100)
