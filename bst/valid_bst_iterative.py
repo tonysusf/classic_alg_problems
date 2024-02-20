@@ -8,19 +8,16 @@ class Node:
         self.right = None
 
 
-
 def is_valid_bst(node):
     stack = []
-    last_visited_node = None
+    last_node = None
     while stack or node:
         while node:
             stack.append(node)
             node = node.left
         node = stack.pop()
-
-        if last_visited_node and node.val <= last_visited_node.val:
-            return False
-        last_visited_node = node
+        if last_node and node.val <= last_node.val: return False
+        last_node = node
         node = node.right
     return True
 
