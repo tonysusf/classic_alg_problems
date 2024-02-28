@@ -8,8 +8,8 @@ def find_missing_ranges(nums, lower, upper):
         results.append([lower, nums[0] - 1])
 
     for i in range(len(nums) - 1):
-        if nums[i + 1] - nums[i] <= 1: continue
-        results.append([nums[i] + 1, nums[i + 1] - 1])
+        if nums[i + 1] - nums[i] > 1:
+            results.append([nums[i] + 1, nums[i + 1] - 1])
 
     if upper > nums[-1]:
         results.append([nums[-1] + 1, upper])

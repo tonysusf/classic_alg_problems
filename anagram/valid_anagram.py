@@ -3,9 +3,7 @@
 from collections import Counter
 
 def is_anagram(s, t):
-    c1 = Counter(s)
-    c2 = Counter(t)
-    return c1 == c2
+    return Counter(s) == Counter(t)
 
 assert is_anagram('anagram', 'nagaram') == True
 
