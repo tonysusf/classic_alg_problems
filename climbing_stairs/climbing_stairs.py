@@ -8,11 +8,10 @@ def climb_stairs(n):
         return 1
     a = 1
     b = 2
-    c = 0
     for i in range(n-2): # fibonacci 
         c = a + b
         a, b = b, c
-    return c
+    return b
 
 assert climb_stairs(1) == 1
 assert climb_stairs(2) == 2
