@@ -18,7 +18,7 @@ def search(nums, target):
 
         # right sub array of mid is sorted
         else:
-            if target <= nums[r] and target > nums[mid]: # binary search move
+            if nums[mid] < target <= nums[r]: # binary search move
                 l = mid + 1
             else:
                 r = mid - 1
