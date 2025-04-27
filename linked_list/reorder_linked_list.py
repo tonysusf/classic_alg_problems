@@ -12,17 +12,19 @@ def reorder_list(head):
 
     # find middle point
     mid = fast = head
+    # example 1 2 3 4 5 6
     while fast and fast.next:
-        mid = mid.next
-        fast = fast.next.next
+        mid = mid.next # at 1, 2, 3, 4
+        fast = fast.next.next # at 1, 3, 5, null
 
-    # reverse the right side 1,2,3,4 and 6,5,4
+    # reverse the right side only
+    # 1 2 3 4 5 6 -> 1 2 3 and 6 5 4
     prev, curr = None, mid
     while curr:
         curr.next, prev, curr = prev, curr, curr.next
     tail = prev
 
-    # now merge
+    # now merge 1 2 3 and 6 5 4
     t1, t2 = head, tail
     while t2.next:
         t1.next, t1 = t2, t1.next
