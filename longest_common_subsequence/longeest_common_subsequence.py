@@ -3,7 +3,7 @@
 
 
 def longest_common_subsequence(str1, str2):
-    dp = [[0] * (len(str2)+1)] * (len(str1)+1)
+    dp = [[0 for _ in range(len(str2)+1)] for _ in range(len(str1)+1)]
     for row in range(1, len(str1)+1):
         for col in range(1, len(str2)+1):
             if str1[row-1] == str2[col-1]:
@@ -22,3 +22,7 @@ assert longest_common_subsequence('abc', 'oiu') == 0
 assert longest_common_subsequence('', '') == 0
 
 assert longest_common_subsequence('a', '') == 0
+
+assert longest_common_subsequence('abcba', 'abcbcba') == 5
+
+
