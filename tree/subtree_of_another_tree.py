@@ -8,20 +8,17 @@ class Node:
 
 
 def is_subtree(root, target_subtree):
-    def hash_subtree(node, add_to_cache):
-        if node is None:
-            return 123
-        left_hash = hash_subtree(node.left, True)
-        right_hash = hash_subtree(node.right, True)
+    def hash_subtree(node, cache=None):
+        if node is None: return 123
+        left_hash = hash_subtree(node.left, cache)
+        right_hash = hash_subtree(node.right, cache)
         node_hash = hash((left_hash, node.val, right_hash))
-
-        if add_to_cache:
-            memo.add(node_hash)
+        if cache is not None: cache.add(node_hash)
         return node_hash
 
     memo = set()
-    hash_subtree(root, True)
-    target = hash_subtree(target_subtree, False)
+    hash_subtree(root, memo)
+    target = hash_subtree(target_subtree)
     return target in memo
 
 
