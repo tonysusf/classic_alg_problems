@@ -25,31 +25,26 @@ class Node:
 
 
 class Solution:
-    def __init__(self):
-        self.preorder_index = 0
-        self.inorder_lookup = {}
-        self.preorder = None
-
-    def create_tree_from_array(self, left, right):
-        if left > right: 
-            return None
-
-        node_value = self.preorder[self.preorder_index]
-        node = Node(node_value)
-        self.preorder_index += 1
-
-        node.left = self.create_tree_from_array(left, self.inorder_lookup[node_value] - 1)
-        node.right = self.create_tree_from_array(self.inorder_lookup[node_value] + 1, right)
-        return node
-        
     def build_tree(self, preorder, inorder):
-        self.preorder = preorder
+        inorder_lookup = {}
+        preorder_index = 0
         for i in range(len(inorder)):
-            self.inorder_lookup[inorder[i]] = i #key as val, val as index in inorder
+            inorder_lookup[inorder[i]] = i #key as val, val as index in inorder
 
-        tree = self.create_tree_from_array(0, len(self.preorder) - 1)
-        out = tree.to_list()
-        return out
+        def create_tree_from_array(left, right, preorder):
+            nonlocal preorder_index
+            if left > right: return None
+
+            node_value = preorder[preorder_index]
+            node = Node(node_value)
+            preorder_index += 1
+
+            node.left = create_tree_from_array(left, inorder_lookup[node_value] - 1, preorder)
+            node.right = create_tree_from_array(inorder_lookup[node_value] + 1, right, preorder)
+            return node
+
+        tree = create_tree_from_array(0, len(inorder) - 1, preorder)
+        return tree.to_list()
 
 
 preorder = [3,9,20,15,7]
