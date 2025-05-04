@@ -19,8 +19,7 @@ def search_word(m, word):
 def visit(row, col, word, m, idx=0):
     if idx == len(word): return True
 
-    if row < 0 or row >= len(m) or col < 0 or col >= len(m[0]):
-        return False
+    if not 0 <= row < len(m) or not 0 <= col < len(m[0]): return False
 
     if m[row][col] != word[idx]: return False
 
