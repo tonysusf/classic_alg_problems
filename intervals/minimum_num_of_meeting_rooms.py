@@ -1,9 +1,8 @@
 # https://leetcode.com/problems/meeting-rooms-ii/submissions/
+# https://neetcode.io/problems/meeting-schedule-ii
 
 def min_meeting_rooms(intervals):
-    if not intervals:
-        return 0
-    # must be sorted for each
+    if not intervals: return 0
     start_times = sorted([x[0] for x in intervals])
     end_times = sorted(x[1] for x in intervals)
 
