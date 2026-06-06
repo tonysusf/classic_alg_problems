@@ -1,16 +1,14 @@
 # https://leetcode.com/problems/word-break/
 
 def word_break(s, word_dict):
-    dp = [False] * len(s)
-    for i in range(len(s)):
-        for w in word_dict:
-            if i+1 < len(w):
-                continue
-            if (i == len(w)-1 or dp[i - len(w)]) and s[i-len(w)+1: i+1] == w:
+    words = set(word_dict)
+    dp = [True] + [False] * len(s)
+    for i in range(1, len(s)+1):
+        for k in range(i):
+            if dp[k] and s[k:i] in words:
                 dp[i] = True
                 break
     return dp[-1]
-
 
 s = "leetcode"
 word_dict = ["leet","code"]
