@@ -1,35 +1,21 @@
 # https://leetcode.com/problems/set-matrix-zeroes/
 
 def set_zeroes(matrix):
-    print('input', matrix)
-    # use m[0][0] as flag for 1st row; use set_first_col_zero for 1st column
-    set_first_col_zero = False
-
-    # scan
-    for row in range(len(matrix)):
-        if matrix[row][0] == 0:
-            set_first_col_zero = True
-        for col in range(1, len(matrix[0])):
-            if matrix[row][col]  == 0:
-                matrix[0][col] = 0
-                matrix[row][0] = 0
-
-    # set 0s
-    for row in range(1, len(matrix)):
-        for col in range(1, len(matrix[0])):
-            if matrix[row][0] == 0 or matrix[0][col] == 0:
-                matrix[row][col] = 0
-
-    # m[0][0] for 1st row
-    if matrix[0][0] == 0:
-        for col in range(len(matrix[0])):
-            matrix[0][col] = 0
-
-    # set_first_col_zero for 1st column
-    if set_first_col_zero:
-        for row in range(len(matrix)):
-            matrix[row][0] = 0
-    print('output', matrix)
+    m, n = len(matrix), len(matrix[0])
+    first_col = any(matrix[r][0] == 0 for r in range(m))
+    first_row = any(matrix[0][c] == 0 for c in range(n))
+    for r in range(1, m):
+        for c in range(1, n):
+            if matrix[r][c] == 0:
+                matrix[r][0] = matrix[0][c] = 0
+    for r in range(1, m):
+        for c in range(1, n):
+            if matrix[r][0] == 0 or matrix[0][c] == 0:
+                matrix[r][c] = 0
+    if first_row:
+        for c in range(n): matrix[0][c] = 0
+    if first_col:
+        for r in range(m): matrix[r][0] = 0
 
 
 def _to_str(l):
