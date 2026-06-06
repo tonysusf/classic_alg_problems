@@ -2,25 +2,19 @@
 # Insert a interval into a sorted interval list
 
 def insert_sorted_intervals(intervals, new_interval):
+    left = []
     i = 0
-    while i < len(intervals) and intervals[i][0] < new_interval[0]:
+    # left side
+    while i < len(intervals) and intervals[i][1] < new_interval[0]:
+        left.append(intervals[i])
         i += 1
-    intervals.insert(i, new_interval)
-
-	# Merge a sorted interval list
-    results = []
-    current = None
-    for i in range(len(intervals)):
-        if current is None:
-            current = intervals[i]
-        elif current[1] >= intervals[i][0]: # overlap
-            current[1] = max(current[1], intervals[i][1]) # merge
-        else: # no overlap
-            results.append(current)
-            current = intervals[i]
-    if current:
-        results.append(current)
-    return results
+    # merge
+    while i < len(intervals) and intervals[i][0] <= new_interval[1]:
+        new_interval[0] = min(new_interval[0], intervals[i][0])
+        new_interval[1] = max(new_interval[1], intervals[i][1])
+        i += 1
+    right = intervals[i:]
+    return left + [new_interval] + right
 
 def _to_str(l):
     for row in l:
