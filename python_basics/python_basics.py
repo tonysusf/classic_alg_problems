@@ -62,7 +62,7 @@ d = deque([1, 2, 3])
 d.append(4)
 d.pop()
 d.popleft()
-d.appendleft()
+d.appendleft(9)
 
 # Set
 s = set([1, 1, 4, 2, 2])
@@ -102,6 +102,6 @@ heapq.nlargest(k, l)
 
 
 # Random
-import randmon
+import random
 random.random()
 random.randint(0,100)
