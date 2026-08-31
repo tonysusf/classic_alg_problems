@@ -4,14 +4,13 @@ def two_sum(nums, target):
     print('nums are', nums, 'target is', target)
     lookup = {}
     result = None
-    for i in range(len(nums)):
-        if nums[i] in lookup:
-            result = [lookup[nums[i]], i]
-            break
+    for i, num in enumerate(nums):
+        if num in lookup:
+            result = sorted([i, lookup[num]])
+            print('result is', result)
+            return result
         else:
-            lookup[target - nums[i]] = i
-    print('result is', result)
-    return result
+            lookup[target - num] = i
 
 nums = [2, 7, 11, 15]
 target = 9
