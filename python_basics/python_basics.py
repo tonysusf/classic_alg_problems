@@ -105,3 +105,11 @@ heapq.nlargest(k, l)
 import random
 random.random()
 random.randint(0,100)
+
+
+#########################
+# Python type annotation
+#########################
+def hello(name: str = "YourName") -> str:
+    return f"Hello {name}"
+
