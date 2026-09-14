@@ -8,15 +8,15 @@ class Node:
 
 
 def find_lowest_common_ancestor(node, p, q):
-    s = [node]
-    while s:
-        current = s.pop()
-        if p.val > current.val and q.val > current.val:
-            s.append(current.right)
-        elif p.val < current.val and q.val < current.val:
-            s.append(current.left)
+    print('root is', node.val, 'p and q are', p.val, q.val)
+    while node:
+        if max(p.val, q.val) < node.val: # on the left side
+            node = node.left
+        elif min(p.val, q.val) > node.val: # on the right side
+            node = node.right
         else:
-            return current
+            print('found it', node.val)
+            return node
 
 root = Node(2)
 node2 = Node(1)
@@ -38,5 +38,3 @@ node3.right = node5
 
 assert find_lowest_common_ancestor(root, node4, node5) == node3
 assert find_lowest_common_ancestor(root, node3, node5) == node3
-
-
