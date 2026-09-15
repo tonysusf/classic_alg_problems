@@ -3,7 +3,7 @@
 from collections import Counter
 import heapq
 
-def get_top_frequent_numbers(nums, k):
+def top_k_frequent_v1(nums, k):
     if k == len(nums):
         return nums
 
@@ -13,11 +13,31 @@ def get_top_frequent_numbers(nums, k):
     return heapq.nlargest(k, num_count_dict.keys(), key = num_count_dict.get)
 
 
+def top_k_frequent_v2(nums, k):
+    counts = Counter(nums)
+
+    buckets = [[] for _ in range(len(nums) + 1)]
+
+    for value, frequency in counts.items():
+        buckets[frequency].append(value)
+
+    result = []
+
+    for bucket in reversed(buckets):
+        for value in bucket:
+            result.append(value)
+
+            if len(result) == k:
+                return result
+
+
 nums = [1,1,1,2,2,3]
 k = 2
-print(get_top_frequent_numbers(nums, k))
+print(top_k_frequent_v1(nums, k))
+print(top_k_frequent_v2(nums, k))
 
 
 nums = [1,1,1,2,2,3]
 k = 3
-print(get_top_frequent_numbers(nums, k))
+print(top_k_frequent_v1(nums, k))
+print(top_k_frequent_v2(nums, k))
