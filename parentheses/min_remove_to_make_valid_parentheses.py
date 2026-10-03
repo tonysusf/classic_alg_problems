@@ -1,31 +1,26 @@
 # https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/
+# return the valid string after removals. no need to count how many being removed.
 
 def min_remove_to_make_valid(s):
-    # remove invalid close parentheses
-    tmp_list = []
-    open_balance = 0
-    open_count = 0
-    for c in s:
-        if c == "(":
-            open_balance += 1
-            open_count += 1
-        if c == ")":
-            if open_balance == 0:
-                continue
-            open_balance -= 1
-        tmp_list.append(c)
-    open_used = open_count - open_balance
+    chars = list(s)
+    stack = []
 
-    # remove unused open parentheses from the right side
-    result = []
-    for c in tmp_list:
-        if c == "(":
-            if open_used <= 0:
-                continue
-            open_used -= 1
-        result.append(c)
+    for i, char in enumerate(chars):
+        if char == "(":
+            stack.append(i)
 
-    return "".join(result)
+        elif char == ")":
+            if stack:
+                stack.pop()
+            else:
+                chars[i] = ""
+
+    for i in stack:
+        chars[i] = ""
+
+    out = "".join(chars)
+    print('output is', out)
+    return out
 
 assert min_remove_to_make_valid('lee(t(c)o)de)') == 'lee(t(c)o)de'
 
