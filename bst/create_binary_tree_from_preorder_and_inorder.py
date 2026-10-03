@@ -21,29 +21,28 @@ class Node:
             queue.append(current.right)
         while l[-1] is None:
             l.pop()
+        print(l)
         return l
 
 
 class Solution:
     def build_tree(self, preorder, inorder):
-        inorder_lookup = {}
-        preorder_index = 0
-        for i in range(len(inorder)):
-            inorder_lookup[inorder[i]] = i #key as val, val as index in inorder
+        inorder_lookup = {value: i for i, value in enumerate(inorder)}
+        roots = iter(preorder)
 
-        def create_tree_from_array(left, right, preorder):
-            nonlocal preorder_index
-            if left > right: return None
+        def build(left, right):
+            if left > right:
+                return None
+            value = next(roots)
+            split_index = inorder_lookup[value]
 
-            node_value = preorder[preorder_index]
-            node = Node(node_value)
-            preorder_index += 1
+            node = Node(value)
+            node.left = build(left, split_index-1)
+            node.right = build(split_index+1, right)
 
-            node.left = create_tree_from_array(left, inorder_lookup[node_value] - 1, preorder)
-            node.right = create_tree_from_array(inorder_lookup[node_value] + 1, right, preorder)
             return node
 
-        tree = create_tree_from_array(0, len(inorder) - 1, preorder)
+        tree = build(0, len(inorder)-1)
         return tree.to_list()
 
 
