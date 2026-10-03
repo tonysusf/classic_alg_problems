@@ -5,22 +5,13 @@
 
 
 def can_jump(nums):
-    memo = []
-    memo = ['UNKNOWN'] * len(nums)
-    memo[-1] = 'GOOD'
-    return can_jump_from_pos(0, nums, memo)
-
-def can_jump_from_pos(p, nums, memo):
-    if memo[p] != 'UNKNOWN':
-        return memo[p] == 'GOOD'
-
-    furthest_jump = min(p + nums[p], len(nums) - 1)
-    for nextPosition in range(p+1, furthest_jump+1):
-        if can_jump_from_pos(nextPosition, nums, memo):
-            memo[p] = 'GOOD'
-            return True
-    memo[p] = 'BAD'
-    return False
+    print('input is', nums)
+    farthest = 0
+    for i, value in enumerate(nums):
+        if i > farthest:
+            return False
+        farthest = max(farthest,i+value)
+    return True
 
 
 nums = [2,3,1,1,4]
