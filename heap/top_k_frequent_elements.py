@@ -4,13 +4,15 @@ from collections import Counter
 import heapq
 
 def top_k_frequent_v1(nums, k):
-    if k == len(nums):
-        return nums
-
+    if k == len(nums): return nums
     num_count_dict = dict(Counter(nums))
-    print(num_count_dict)
-
     return heapq.nlargest(k, num_count_dict.keys(), key = num_count_dict.get)
+
+
+def top_k_frequent_v1b(nums, k):
+    if k == len(nums): return nums
+    counts = Counter(nums)
+    return [num for num, freq in counts.most_common(k)]
 
 
 def top_k_frequent_v2(nums, k):
@@ -33,11 +35,15 @@ def top_k_frequent_v2(nums, k):
 
 nums = [1,1,1,2,2,3]
 k = 2
+print('--- input is ---', nums)
 print(top_k_frequent_v1(nums, k))
+print(top_k_frequent_v1b(nums, k))
 print(top_k_frequent_v2(nums, k))
 
 
 nums = [1,1,1,2,2,3]
+print('--- input is ---', nums)
 k = 3
 print(top_k_frequent_v1(nums, k))
+print(top_k_frequent_v1b(nums, k))
 print(top_k_frequent_v2(nums, k))
