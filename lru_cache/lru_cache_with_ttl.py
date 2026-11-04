@@ -16,6 +16,7 @@ class LRUCacheTTL:
             return None
         # Mark this key as recently used
         self.cache.move_to_end(key)
+        print('get', key, value)
         return value
 
     def put(self, key, value):
@@ -29,6 +30,7 @@ class LRUCacheTTL:
         self.cache.move_to_end(key)
         while len(self.cache) > self.capacity:
             self.cache.popitem(last=False)
+        print('put', key, value)
 
 capacity = 3
 ttl = 1
@@ -40,3 +42,7 @@ lru.put(3, 30)
 assert lru.get(3) == 30
 lru.put(4, 40)
 assert lru.get(1) == None
+assert len(lru.cache) == 3
+time.sleep(1)
+lru.put(5, 50)
+assert len(lru.cache) == 1
