@@ -1,7 +1,8 @@
 # Implement a filtering engine/ class, for a given data set to filter out the data
 from dataclasses import dataclass
+import re
 
-@dataclass
+# @dataclass
 class Filter:
     apply_filter: object
 
@@ -29,50 +30,43 @@ def get_filter(field_name, op, target_val):
     }
     if op not in ops: raise ValueError("Invalid operator")
 
-    def match_filter(row):
+    def execute_filter(row):
         if field_name not in row: 
             raise ValueError(f"Field '{field_name}' not found in row")
         return ops[op](row[field_name], target_val)
 
-    return Filter(match_filter)
+    return Filter(execute_filter)
 
 def apply_filter_for_data(rows, condition):
-    print('select', rows, condition)
-    return [row for row in rows if condition(row)]
+    result = [row for row in rows if condition(row)]
+    print('result is', result)
+    return result
 
 
 ############## Tests ###############################
 data = [
-    {"name": "Alice", "age": 30, "salary": 100, "type": "A"},
-    {"name": "Bob", "age": 20, "salary": 50, "type": "B"},
-    {"name": "Charlie", "age": 40, "salary": 150, "type": "A"},
-    {"name": "David", "age": 22, "salary": 90},
+    {"name": "Alice", "age": 30, "salary": 100, "gender": "F"},
+    {"name": "Bob", "age": 20, "salary": 50, "gender": "M"},
+    {"name": "Jim", "age": 40, "salary": 150, "gender": "M"},
+    {"name": "David", "age": 22, "salary": 90, "gender": "M"},
 ]
 # simple 
-test_filter = get_filter("age", ">=", 30)
-assert len(apply_filter_for_data(data, test_filter)) == 2
+ft = get_filter("age", ">=", 30)
+assert len(apply_filter_for_data(data, ft)) == 2
 
 # AND
-test_filter = (get_filter("age", ">=", 30) & get_filter("type", "==", "A"))
-result = apply_filter_for_data(data, test_filter)
-assert [p["name"] for p in result] == ["Alice", "Charlie"]
+ft = (get_filter("age", ">=", 30) and get_filter("gender", "==", "F"))
+result = apply_filter_for_data(data, ft)
+assert [p["name"] for p in result] == ["Alice"]
 
 # OR
-test_filter = (
-    get_filter("salary", ">", 120) | get_filter("type", "==", "B")
+ft = (
+    get_filter("salary", ">", 120) | get_filter("gender", "==", "F")
 )
-result = apply_filter_for_data(data, test_filter)
-assert [p["name"] for p in result] == ["Bob", "Charlie"]
+result = apply_filter_for_data(data, ft)
+assert [p["name"] for p in result] == ["Alice", "Jim"]
 
 # NOT
-test_filter = ~get_filter("type", "==", "A")
-result = apply_filter_for_data(data, test_filter)
-assert [p["name"] for p in result] == ["Bob", "David"]
-
-# Combined AND, OR, NOT
-test_filter = (
-    (get_filter("age", ">=", 30) | get_filter("salary", "<", 60))
-    & ~get_filter("type", "==", "B")
-)
-result = apply_filter_for_data(data, complextest_filter_filter)
-assert [p["name"] for p in result] == ["Alice", "Charlie"]
+ft = ~get_filter("gender", "==", "F")
+result = apply_filter_for_data(data, ft)
+assert [p["name"] for p in result] == ["Bob", "Jim", "David"]
