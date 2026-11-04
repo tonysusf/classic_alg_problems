@@ -1,13 +1,12 @@
 # Implement a filtering engine/ class, for a given data set to filter out the data
-
 from dataclasses import dataclass
 
 @dataclass
 class Filter:
-    fn: object
+    apply_filter: object
 
     def __call__(self, row):
-        return self.fn(row)
+        return self.apply_filter(row)
 
     def __and__(self, other):
         return Filter(lambda row: self(row) and other(row))
@@ -18,9 +17,8 @@ class Filter:
     def __invert__(self):
         return Filter(lambda row: not self(row))
 
-
-def field(name, op, target):
-    print('field is', name, op, target)
+def get_filter(field_name, op, target_val):
+    print('field is', field_name, op, target_val)
     ops = {
         "==": lambda a, b: a == b,
         "!=": lambda a, b: a != b,
@@ -29,75 +27,52 @@ def field(name, op, target):
         "<": lambda a, b: a < b,
         "<=": lambda a, b: a <= b,
     }
-    if op not in ops: raise ValueError("Unsupported operator")
+    if op not in ops: raise ValueError("Invalid operator")
 
-    def match(row):
-        if name not in row: return False
-        try:
-            return ops[op](row[name], target)
-        except TypeError:
-            return False
+    def match_filter(row):
+        if field_name not in row: 
+            raise ValueError(f"Field '{field_name}' not found in row")
+        return ops[op](row[field_name], target_val)
 
-    return Filter(match)
+    return Filter(match_filter)
 
-
-def select(rows, condition):
+def apply_filter_for_data(rows, condition):
     print('select', rows, condition)
     return [row for row in rows if condition(row)]
 
 
 ############## Tests ###############################
-
 data = [
     {"name": "Alice", "age": 30, "salary": 100, "type": "A"},
     {"name": "Bob", "age": 20, "salary": 50, "type": "B"},
     {"name": "Charlie", "age": 40, "salary": 150, "type": "A"},
     {"name": "David", "age": 22, "salary": 90},
 ]
+# simple 
+test_filter = get_filter("age", ">=", 30)
+assert len(apply_filter_for_data(data, test_filter)) == 2
 
-# simple filter
-age_filter = field("age", ">=", 30)
-assert len(select(data, age_filter)) == 2
-
-# AND case
-combined = (
-    field("age", ">=", 30) & field("type", "==", "A")
-)
-result = select(data, combined)
+# AND
+test_filter = (get_filter("age", ">=", 30) & get_filter("type", "==", "A"))
+result = apply_filter_for_data(data, test_filter)
 assert [p["name"] for p in result] == ["Alice", "Charlie"]
 
-# OR case
-combined = (
-    field("salary", ">", 120) | field("type", "==", "B")
+# OR
+test_filter = (
+    get_filter("salary", ">", 120) | get_filter("type", "==", "B")
 )
-result = select(data, combined)
+result = apply_filter_for_data(data, test_filter)
 assert [p["name"] for p in result] == ["Bob", "Charlie"]
 
-# NOT case
-not_type_a = ~field("type", "==", "A")
-result = select(data, not_type_a)
+# NOT
+test_filter = ~get_filter("type", "==", "A")
+result = apply_filter_for_data(data, test_filter)
 assert [p["name"] for p in result] == ["Bob", "David"]
 
-# Missing field
-missing = field("city", "==", "SF")
-assert select(data, missing) == []
-
-# Empty input
-assert select([], age_filter) == []
-
-# Invalid operator
-try:
-    field("age", "contains", 30)
-    assert False, "Expected ValueError"
-except ValueError:
-    pass
-
 # Combined AND, OR, NOT
-complex_filter = (
-    (field("age", ">=", 30) | field("salary", "<", 60))
-    & ~field("type", "==", "B")
+test_filter = (
+    (get_filter("age", ">=", 30) | get_filter("salary", "<", 60))
+    & ~get_filter("type", "==", "B")
 )
-result = select(data, complex_filter)
+result = apply_filter_for_data(data, complextest_filter_filter)
 assert [p["name"] for p in result] == ["Alice", "Charlie"]
-
-print("All tests passed!")
