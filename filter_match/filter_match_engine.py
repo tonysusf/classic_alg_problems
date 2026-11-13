@@ -37,8 +37,8 @@ def get_filter(field_name, op, target_val):
 
     return Filter(execute_filter)
 
-def apply_filter_for_data(rows, condition):
-    result = [row for row in rows if condition(row)]
+def apply_filter_for_data(rows, filter_condition):
+    result = [row for row in rows if filter_condition(row)]
     print('result is', result)
     return result
 

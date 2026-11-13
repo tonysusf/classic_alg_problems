@@ -1,31 +1,32 @@
 # https://leetcode.com/problems/course-schedule/
 
 from collections import defaultdict
+from collections import deque
 
 
-def has_cycle(current, edges, visited, in_path):
-    if in_path[current]:
-        return True # cycle found
-    if visited[current]:
-        return False
-    visited[current] = True
-    in_path[current] = True
-    for other_node in edges[current]:
-        if has_cycle(other_node, edges, visited, in_path):
-            return True # bubble up
-    in_path[current] = False # reset
-    return False
+def can_finish_courses(n, prerequisites):
+    pre_to_courses = [[] for _ in range(n)] # list with size n, each is a list too
+    count_per_course = [0] * n # prerequisite count per course
 
-def can_finish_courses(num_of_courses, prerequisites):
-    edges = defaultdict(list) # key as target course, value as dependent courses
-    for p in prerequisites:
-        edges[p[1]].append(p[0])
-    visited = [False] * num_of_courses
-    in_path = [False] * num_of_courses
-    for current in range(num_of_courses):
-        if has_cycle(current, edges, visited, in_path):
-            return False # can't finish
-    return True
+    for c, p in prerequisites:
+        pre_to_courses[p].append(c)
+        count_per_course[c] += 1
+
+    tmp_ready = [i for i in range(n) if count_per_course[i] == 0]
+    queue = deque(tmp_ready) # list of ready to start courses
+    done_count = 0 # finished course count
+
+    while queue:
+        c = queue.popleft() # current course
+        done_count += 1
+        for other_c in pre_to_courses[c]:
+            # remove prerequisite to the course just finished
+            count_per_course[other_c] -= 1
+            if count_per_course[other_c] == 0:
+                queue.append(other_c)
+    return done_count == n
+
+
 
 num_of_courses = 2
 prerequisites = [[1, 0]]
