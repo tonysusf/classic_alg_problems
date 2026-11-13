@@ -1,10 +1,10 @@
 # https://leetcode.com/problems/course-schedule/
 
-from collections import defaultdict
 from collections import deque
 
-
 def can_finish_courses(n, prerequisites):
+    print('input is', n, prerequisites)
+
     pre_to_courses = [[] for _ in range(n)] # list with size n, each is a list too
     count_per_course = [0] * n # prerequisite count per course
 
