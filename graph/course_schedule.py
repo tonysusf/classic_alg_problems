@@ -5,11 +5,11 @@ from collections import deque
 def can_finish_courses(n, prerequisites):
     print('input is', n, prerequisites)
 
-    pre_to_courses = [[] for _ in range(n)] # list with size n, each is a list too
+    ps_to_courses = [[] for _ in range(n)] # list with size n, each is a list too
     count_per_course = [0] * n # prerequisite count per course
 
     for c, p in prerequisites:
-        pre_to_courses[p].append(c)
+        ps_to_courses[p].append(c)
         count_per_course[c] += 1
 
     tmp_ready = [i for i in range(n) if count_per_course[i] == 0]
@@ -17,13 +17,13 @@ def can_finish_courses(n, prerequisites):
     done_count = 0 # finished course count
 
     while queue:
-        c = queue.popleft() # current course
+        current = queue.popleft() # current course
         done_count += 1
-        for other_c in pre_to_courses[c]:
+        for oc in ps_to_courses[current]: # oc as other_course
             # remove prerequisite to the course just finished
-            count_per_course[other_c] -= 1
-            if count_per_course[other_c] == 0:
-                queue.append(other_c)
+            count_per_course[oc] -= 1
+            if count_per_course[oc] == 0:
+                queue.append(oc)
     return done_count == n
 
 
